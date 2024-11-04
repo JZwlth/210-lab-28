@@ -2,6 +2,11 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <algorithm>
+#include <map>
+#include <set>
+#include <vector>
+#include <random>
 #include "Goat.h"
 using namespace std;
 
@@ -17,7 +22,7 @@ int main() {
     srand(time(0));
     bool again;
 
-    // read & populate arrays for names and colors
+    // Read and populate arrays for names and colors
     ifstream fin("names.txt");
     string names[SZ_NAMES];
     int i = 0;
@@ -29,45 +34,19 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
-    // create & populate a trip of Goats using std::list of random size 8-15
+    // Create and populate a trip of Goats using std::list of random size 8-15
     int tripSize = rand() % 8 + 8;
     list<Goat> trip;
     int age;
     string name, color;
     for (int i = 0; i < tripSize; i++) {
-        age = rand() % MAX_AGE;  // defined in Goat.h
+        age = rand() % MAX_AGE;
         name = names[rand() % SZ_NAMES];
         color = colors[rand() % SZ_COLORS];
         Goat tmp(name, age, color);
         trip.push_back(tmp);
     }
-    
-    // Goat Manager 3001 Engine
-    int sel = main_menu();
-    while (sel != 4) {
-        switch (sel) {
-            case 1:
-                cout << "Adding a goat.\n";
-                add_goat(trip, names, colors);
-                break;
-            case 2:    
-                cout << "Removing a goat.\n";
-                delete_goat(trip);
-                break;
-            case 3:    
-                cout << "Displaying goat data.\n";
-                display_trip(trip);
-                break;
-            default:
-                cout << "Invalid selection.\n";
-                break;
-        }
-        sel = main_menu();
-    }
-    
 
-    return 0;
-}
 
 int main_menu() {
     cout << "*** GOAT MANAGER 3001 ***\n";
