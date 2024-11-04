@@ -105,3 +105,59 @@ int select_goat(list<Goat> trp) {
     }
     return input;
 }
+
+void display_goats_older_than(const list<Goat>& trip) {
+    int age;
+    cout << "Enter the age threshold: ";
+    cin >> age;
+    cout << "Goats older than " << age << ":\n";
+    for (const auto &goat : trip) {
+        if (goat.get_age() > age) {
+            cout << goat.get_name() << " (" << goat.get_age() << " years old, " << goat.get_color() << ")\n";
+        }
+    }
+}
+
+void display_unique_colors(const list<Goat>& trip) {
+    set<string> unique_colors;
+    for (const auto &goat : trip) {
+        unique_colors.insert(goat.get_color());
+    }
+    cout << "Unique colors:\n";
+    for (const auto &color : unique_colors) {
+        cout << color << endl;
+    }
+}
+
+void shuffle_goats(list<Goat>& trip) {
+    vector<Goat> temp(trip.begin(), trip.end()); // Copy list to vector for shuffling
+    random_device rd;
+    mt19937 g(rd());
+    shuffle(temp.begin(), temp.end(), g); // Shuffle the vector
+    trip.assign(temp.begin(), temp.end()); // Assign back to list
+    cout << "Goats shuffled.\n";
+}
+
+void count_goats_by_color(const list<Goat>& trip) {
+    map<string, int> color_count;
+    for (const auto &goat : trip) {
+        color_count[goat.get_color()]++;
+    }
+    for (const auto &[color, count] : color_count) {
+        cout << color << ": " << count << " goats\n";
+    }
+}
+
+void sort_goats_by_name(list<Goat>& trip) {
+    trip.sort([](const Goat &a, const Goat &b) {
+        return a.get_name() < b.get_name();
+    });
+    cout << "Goats sorted by name.\n";
+}
+
+void sort_goats_by_age(list<Goat>& trip) {
+    trip.sort([](const Goat &a, const Goat &b) {
+        return a.get_age() < b.get_age();
+    });
+    cout << "Goats sorted by age.\n";
+}
