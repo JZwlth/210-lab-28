@@ -76,6 +76,11 @@ void delete_goat(list<Goat> &trip) {
 void add_goat(list<Goat> &trip, string nms[], string cls[]) {
     cout << "ADD A GOAT\n";
     int age = rand() % MAX_AGE;
+    string nm = nms[ran
+
+void add_goat(list<Goat> &trip, string nms[], string cls[]) {
+    cout << "ADD A GOAT\n";
+    int age = rand() % MAX_AGE;
     string nm = nms[rand() % SZ_NAMES];
     string cl = cls[rand() % SZ_COLORS];
     Goat tmp(nm, age, cl);
@@ -85,12 +90,45 @@ void add_goat(list<Goat> &trip, string nms[], string cls[]) {
 
 void display_trip(list<Goat> trp) {
     int i = 1;
-    for (auto gt: trp)
-        cout << "\t" 
+    for (auto gt : trp)
+        cout << "\t"
              << "[" << i++ << "] "
-             << gt.get_name() 
-             << " (" << gt.get_age() 
+             << gt.get_name()
+             << " (" << gt.get_age()
              << ", " << gt.get_color() << ")\n";
+}
+
+int select_goat(list<Goat> trp) {
+    int input;
+    cout << "Make a selection:\n";
+    display_trip(trp);
+    cout << "Choice --> ";
+    cin >> input;
+    while (input < 1 or input > trp.size()) {
+        cout << "Invalid choice, again --> ";
+        cin >> input;
+    }
+    return input;
+}
+
+// Additional functions
+
+void find_oldest_goat(const list<Goat>& trip) {
+    auto oldest = max_element(trip.begin(), trip.end(), [](const Goat &a, const Goat &b) {
+        return a.get_age() < b.get_age();
+    });
+    if (oldest != trip.end()) {
+        cout << "Oldest Goat: " << oldest->get_name() << " (" << oldest->get_age() << " years old)\n";
+    }
+}
+
+void find_youngest_goat(const list<Goat>& trip) {
+    auto youngest = min_element(trip.begin(), trip.end(), [](const Goat &a, const Goat &b) {
+        return a.get_age() < b.get_age();
+    });
+    if (youngest != trip.end()) {
+        cout << "Youngest Goat: " << youngest->get_name() << " (" << youngest->get_age() << " years old)\n";
+    }
 }
 
 int select_goat(list<Goat> trp) {
